@@ -23,7 +23,7 @@ if (!empty($_POST) )  {
         case 'register':
             $registerMessages = Validation::validate();
             if(empty($registerMessages)) {
-                $newUser = new User;
+                $newUser = new User();
                 $newUser->setUsername($_POST['username']);
                 $newUser->setPassword($_POST['password']);
                 if(!UserMapper::registerUser($newUser)) {

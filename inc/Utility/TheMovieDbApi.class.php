@@ -37,6 +37,33 @@ class TheMovieDbApi {
             "release_date": "2017-10-25"
     },
     */
+
+        /**
+     * Get the movie by the specific id.
+     * Documentation: https://developers.themoviedb.org/3/movies/get-movie-details
+     */
+    public static function getMovieById(int $movieId) {
+        $movie = file_get_contents(
+            sprintf('https://api.themoviedb.org/3/movie/%d?api_key=%s',
+            $movieId, self::$apiKey)
+        );
+        $jsonDecodedResponse = json_decode($movie);
+        return $jsonDecodedResponse;
+        
+    }
+
+    public static function getMovieByName($movies ,string $moviename) {
+        if(empty($moviename)) return $movies;
+        foreach ($movies as $movie) {
+            if(strcasecmp($movie->title, $moviename) == false) {
+                return $movie;
+            }
+        }
+        
+    }
+    /**
+     * This is the way to retrieve images 500x500.
+     */
     public static function getMoviesBetweenYears(int $startYear, int $endYear) {
         $movies = file_get_contents(
             sprintf('https://api.themoviedb.org/3/discover/movie?api_key=%s&primary_release_date.gte=%d&primary_release_date.lte=%d',

@@ -1,46 +1,38 @@
 <?php
 
-Class User  {
-    // +----------+-------------+------+-----+---------+----------------+
-    // | Field    | Type        | Null | Key | Default | Extra          |
-    // +----------+-------------+------+-----+---------+----------------+
-    // | id       | int(11)     | NO   | PRI | NULL    | auto_increment |
-    // | username | varchar(50) | NO   |     | NULL    |                |
-    // | password | varchar(50) | NO   |     | NULL    |                |
-    // +----------+-------------+------+-----+---------+----------------+
+class User{
+    
+    private $UserID;
+    private $Username;
+    private $Password;
 
-    //Attributes
-    private $id, $username, $password;
-
-    //Getters
-    public function getId() : int {
-        return $this->id;
-    }
-    public function getUsername() : string {
-        return $this->username;
-    }
-    public function getPassword() : string {
-        return $this->password;
+    public function setPassword($password){
+        $this->Password  = password_hash($password, PASSWORD_DEFAULT);
     }
 
-    //Setters
-    public function setId(int $id) {
-        $this->id = $id;
-    }
-    public function setUsername(string $username) {
-        $this->username = $username;
-    }
-    public function setPassword(string $newPassword)    {
-        //Hash password
-        $hashPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        //Write the password
-       $this->password = $hashPassword; 
+    public function setUserID($userid){
+        $this->UserID = $userid;
     }
 
-    //Verify password
-    public function verifyPassword($verifyPassword) : bool {
-        //check password_verify
-        return password_verify($verifyPassword, $this->password);
+    public function setUsername($username){
+        $this->Username = $username;
     }
 
+    public function getPassword(){
+        return $this->Password;
+    }
+
+    public function getUserID(){
+        return $this->UserID;
+    }
+
+    public function getUsername(){
+        return $this->Username;
+    }
+
+    public function verifyPassword($password){
+        return password_verify($password,$this->Password);
+    }
 }
+
+?>

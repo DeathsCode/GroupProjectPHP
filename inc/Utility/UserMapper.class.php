@@ -12,7 +12,7 @@ class UserMapper    {
 
     //This function gets the user by username
     static function getUserbyName(string $username) {
-        $query = "select * from user where username = :username;";
+        $query = "SELECT * FROM user WHERE Username = :username;";
         self::$db->query($query);
         self::$db->bind(':username', $username);
         $user = self::$db->singleResult();
@@ -23,7 +23,7 @@ class UserMapper    {
     static function registerUser(User $newUser) : bool {
         //SQL Query
         try {
-            $query = "insert into user (username, password) values (:username, :password);";
+            $query = "INSERT INTO User (Username, Password) values (:username, :password);";
             self::$db->query($query);
             self::$db->bind(':username', $newUser->getUsername());
             self::$db->bind(':password', $newUser->getPassword());
@@ -37,6 +37,31 @@ class UserMapper    {
         } catch (\Throwable $th) {
             return false;
         }
+    }
+
+    static function getUserbyID($Username){
+        $SQLSelect = "SELECT * FROM User WHERE Username = :username";
+
+        self::$db->query($SQLSelect);
+
+        self::$db->bind(':username',$User->getUsername());
+      
+        self::$db->execute();
+
+        return self::$db->singleResult();
+    }
+
+    static function deleteUser($User){
+       
+        $SQLDelete = "DELETE FROM User WHERE UserID = :userid";
+
+        self::$db->query($SQLDelete);
+
+        self::$db->bind(':userid',$User->getUserID());
+      
+        self::$db->execute();
+
+        return self::$db->RowCount();
     }
 
 }
